@@ -8,6 +8,7 @@ from .models import Notes
 class NotesListView(ListView):
     model = Notes
     context_object_name = 'notes'
+    template_name = 'notes/notes_list.html'
 
 #def list(request):
 #    all_notes = Notes.objects.all() #Stores all the notes
