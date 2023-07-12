@@ -1,0 +1,26 @@
+{% extends 'pizza/base.html' %}
+{% block 'body' %}
+<table class=".zui-table">
+    <thead>
+        <tr>
+            <th>
+                Topping 1
+            </th>
+            <th>
+                Topping 2
+            </th>
+        </tr>
+    </thead>
+    {% for instance in data %}
+        <tr>
+            <td>
+                {{ instance.fields.topping1 }}
+            </td>
+            <td>
+                {{ instance.fields.topping2 }}
+            </td>
+        </tr>
+
+    {% endfor %}
+</table>
+{% endblock %}

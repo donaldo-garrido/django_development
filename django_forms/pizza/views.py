@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import PizzaForm, MultiplePizzaForm
 from django.forms import formset_factory
 from .models import Pizza
+from django.core import serializers
 
 # Create your views here.
 
@@ -64,3 +65,10 @@ def edit_order(request, pk):
             note = 'Order has been updated'
             return render(request, 'pizza/edit_order.html', {'pizzaform':form, 'pizza':pizza, 'note':note})
     return render(request, 'pizza/edit_order.html', {'pizzaform':form, 'pizza':pizza})
+
+# fetching pizzas and saving in a dictionary
+def db(request):
+    data = serializers.serialize('python', Pizza.objects.all())
+
+    context = {'data':data}
+    return render(request, 'pizza/db.html', context)
