@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from .forms import PizzaForm, MultiplePizzaForm
 from django.forms import formset_factory
-from .models import Pizza
+from .models import Pizza, Size
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView, LogoutView
 
 # Create your views here.
 
@@ -67,8 +69,49 @@ def edit_order(request, pk):
     return render(request, 'pizza/edit_order.html', {'pizzaform':form, 'pizza':pizza})
 
 # fetching pizzas and saving in a dictionary
+@login_required(login_url='login')
 def db(request):
-    data = serializers.serialize('python', Pizza.objects.all())
+    data = serializers.serialize('python', Pizza.objects.filter())
+    #size_list = serializers.serialize('python', Size.objects.all())
+    print(data)
+    #print(size_list)
+    dict_size = []
+    """
+    for sizex in size_list:
+        id = sizex['pk']
+        name = sizex['fields']['title']
+        print(id)
+        print(name)
 
-    context = {'data':data}
+        dict_size[id] = name
+
+    """
+
+    
+
+    x = Pizza.objects.all()
+    aux = 0
+
+    for obj in x:
+        print(x[aux].size.title)
+        print(x[aux].topping1)
+        print(x[aux].topping2)
+
+        dict_size.append({'topping1':x[aux].topping1, 'topping2':x[aux].topping2, 'size':x[aux].size.title})
+
+        aux += 1
+    print(dict_size)
+
+    context = {'dict_size':dict_size}
+    #print(x.fields.size.title)
     return render(request, 'pizza/db.html', context)
+
+
+#def authorized(request):
+#    return render(request, 'pizza/authorized.html', {})
+
+class LoginInterfaceView(LoginView):
+    template_name = 'pizza/login.html'
+
+class LogoutInterfaceView(LogoutView):
+    template_name = 'pizza/logout.html'

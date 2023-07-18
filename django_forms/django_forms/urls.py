@@ -25,4 +25,6 @@ urlpatterns = [
     path('pizzas', views.pizzas, name = 'pizzas'),
     path('order/<int:pk>', views.edit_order, name = 'edit_order'),
     path('db', views.db, name = 'db'),
+    path('login', views.LoginInterfaceView.as_view(), name='login'),
+    path('logout', views.LogoutInterfaceView.as_view(), name='logout'),
 ]
