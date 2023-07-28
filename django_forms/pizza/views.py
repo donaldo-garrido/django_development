@@ -76,18 +76,6 @@ def db(request):
     print(data)
     #print(size_list)
     dict_size = []
-    """
-    for sizex in size_list:
-        id = sizex['pk']
-        name = sizex['fields']['title']
-        print(id)
-        print(name)
-
-        dict_size[id] = name
-
-    """
-
-    
 
     x = Pizza.objects.all()
     aux = 0
